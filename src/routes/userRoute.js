@@ -3,5 +3,5 @@ const router = express.Router();
 
 
 export default router.get("/",(req,res)=>{
-    res.send("Test route");
+    res.send("Test router");
 });
