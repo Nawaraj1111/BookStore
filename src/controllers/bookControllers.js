@@ -4,6 +4,7 @@
         if(value)
         {
             value.save();
+            console.log(value);
           res.send("Response is send successfully");
         }
         else{
@@ -21,6 +22,19 @@
           res.send(book.id,book.writerName,book.authorName,book.pages);
       }
   }
+
+  async updateBook(req,res,model){
+    const {id} = req.params;
+    if(id)
+    {
+      const data=await model.update(req.body,{
+        where:{
+          id,
+        }
+      });
+      res.send(data);
+    }
+}
 }
 
 export default BookController;

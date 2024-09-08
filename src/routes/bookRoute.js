@@ -6,13 +6,17 @@ import BookController from '../controllers/bookControllers.js';
 const bookController=new BookController()
 
 router.get("/:id",async(req,res)=>{
-    bookController.addBook(req,res,bookModel);
+    bookController.showData(req,res,bookModel);
 });
 
 router.post("/",async(req,res)=>{
     bookController.addBook(req,res,bookModel);
 });
 
+
+router.put("/:id",async(req,res)=>{
+    bookController.updateBook(req,res,bookModel);
+});
 
 export default router;
 
