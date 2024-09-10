@@ -18,5 +18,11 @@ router.put("/:id",async(req,res)=>{
     bookController.updateBook(req,res,bookModel);
 });
 
+
+router.get("/search/all",async(req,res)=>{
+    bookController.searchBook(req,res,bookModel);
+});
+
+
 export default router;
 
