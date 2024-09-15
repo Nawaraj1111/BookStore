@@ -1,4 +1,5 @@
-import nodemailer from 'nodemailer';
+import { Op } from "sequelize";
+
   
  class BookController{
     async addBook (req,res,model){
@@ -58,31 +59,54 @@ import nodemailer from 'nodemailer';
 
 
   async searchBook(req, res, model) {
-    let valuequery=req.query  
+    let valuequery=req.query 
+    console.log(valuequery)
     if(valuequery)
       {
-        model.findall({
+        const books = await model.findAll({
           where: {
-            [Op.or]:{
-              writerName:{
-                [Op.like]: `%${valuequery}%`,
+            [Op.or]: [
+              {
+                writerName: {
+                  [Op.like]: `%${valuequery.writerName}%`,
+                },
               },
-              authorName:{
-                [Op.like]:`%${valuequery}%`,
-              }
-            }
-          }
+              {
+                authorName: {
+                  [Op.like]: `%${valuequery.authorName}%`,
+                },
+              },
+            ],
+          },
         });
+
+        if(books.length >0)
+        {
+          console.log("Console is preparing");
+          res.send({
+            data:books,
+            success:true,
+          });
+        }
+        else{
+          res.json({
+            success:true,
+            message:"Books are not available",
+            data:books,
+          });
+        }
 
       } 
       else{
         res.json({
           success: false,
           message:"Empty query search",
-        })
+        });
       } 
-
+   
   }
+
+
 }
 
 
