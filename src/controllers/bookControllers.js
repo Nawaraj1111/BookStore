@@ -57,7 +57,6 @@ import { Op } from "sequelize";
     }
   }
 
-
   async searchBook(req, res, model) {
     let valuequery=req.query 
     console.log(valuequery)
@@ -82,7 +81,6 @@ import { Op } from "sequelize";
 
         if(books.length >0)
         {
-          console.log("Console is preparing");
           res.send({
             data:books,
             success:true,
@@ -106,7 +104,26 @@ import { Op } from "sequelize";
    
   }
 
+  async deleteBook(req,res,model){
+    const {id} = req.params;
+   
+    const book = await model.findByPk(id);
 
+    try {
+      let bookDetails = await model.findOne({ USER_ID: id});
+  
+      bookDetails.destroy().then(function(){
+          res.status(200).json({
+              message: 'Book Id deleted.'
+          })
+      });
+  
+  } catch (e) {
+      // errorHandler(res, e)
+      console.log("Error successful",e);
+  }
+  
+  }
 }
 
 

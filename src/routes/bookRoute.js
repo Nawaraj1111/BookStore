@@ -23,6 +23,9 @@ router.get("/search/all",async(req,res)=>{
     bookController.searchBook(req,res,bookModel);
 });
 
+router.delete("/:id",async(req,res)=>{
+    bookController.deleteBook(req,res,bookModel);
+});
 
 export default router;
 
